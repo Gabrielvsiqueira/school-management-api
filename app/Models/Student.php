@@ -12,6 +12,10 @@ class Student extends Model
         'turma_id'
     ];
 
+    protected $casts = [
+        'date_of_birth' => 'date',
+    ];
+
     public function turma(){
         return $this->belongsTo(Turma::class);
     }

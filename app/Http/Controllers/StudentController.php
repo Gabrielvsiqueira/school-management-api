@@ -18,9 +18,9 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            "name" => "required",
-            "date_of_birth" => "required",
-            "turma" => "required"
+            "name" => "required|string",
+            "date_of_birth" => "required|date",
+            "turma_id" => "required"
         ]);
 
         $student = Student::create($data);
@@ -34,9 +34,9 @@ class StudentController extends Controller
     public function update(Request $request, Student $student)
     {
         $data = $request->validate([
-            "name" => "sometimes",
-            "date_of_birth" => "sometimes",
-            "turma" => "sometimes"
+            "name" => "sometimes|string|max:255",
+            "date_of_birth" => "sometimes|date",
+            "turma_id" => "sometimes|integer|exists:turmas,id"
         ]);
 
         $student->update($data);

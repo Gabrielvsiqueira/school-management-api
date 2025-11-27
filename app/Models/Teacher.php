@@ -1,24 +1,28 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Laravel\Sanctum\HasApiTokens;
+    use Illuminate\Foundation\Auth\User as Authenticatable;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Laravel\Sanctum\HasApiTokens;
 
-class Teacher extends Authenticatable
-{
-    use HasApiTokens, HasFactory;
+    class Teacher extends Authenticatable
+    {
+        use HasApiTokens, HasFactory;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'department',
-    ];
+        protected $fillable = [
+            'name',
+            'email',
+            'password',
+            'department',
+        ];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-}
+        protected $hidden = [
+            'password',
+            'remember_token',
+        ];
+
+        public function turmas(){
+            return $this->belongsToMany(Turma::class);
+        }
+    }

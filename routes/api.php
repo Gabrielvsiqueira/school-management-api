@@ -7,6 +7,7 @@ use App\Http\Controllers\TurmaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -25,5 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/turmas', [TurmaController::class, 'store'])->name('store');
     Route::patch('/turmas/{turmas}', [TurmaController::class, 'update'])->name('update');
     Route::delete('/turmas/{turmas}', [TurmaController::class, 'destroy'])->name('destroy');
+    Route::post('/turmas/{turmas}/professor', [TurmaController::class, 'addTeacher'])->name('addTeacher');
 
 });
