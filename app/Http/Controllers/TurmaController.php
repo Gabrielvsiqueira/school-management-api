@@ -68,7 +68,7 @@ class TurmaController extends Controller
             return response()->json([
                 "status" => "error",
                 "message" => "O professor já está associado a esta turma."
-            ], 409); // 409 Conflict
+            ], 409);
         }
 
         $turma->teachers()->attach($teacherId);
@@ -79,5 +79,15 @@ class TurmaController extends Controller
             "turma_id" => $turma->id,
             "teacher_id" => $teacherId
         ], 201);
+    }
+
+    public function show(Turma $turma)
+    {
+        $turmaComDetalhes = $turma->load(['students', 'teachers']);
+
+        return response()->json([
+            "status" => "success",
+            "data" => $turmaComDetalhes
+        ]);
     }
 }

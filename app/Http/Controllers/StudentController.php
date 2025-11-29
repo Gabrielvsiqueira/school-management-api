@@ -17,11 +17,20 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
             "name" => "required|string",
             "date_of_birth" => "required|date",
-            "turma_id" => "required"
+            "turma_id" => "required|integer|exists:turmas,id"
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "status" => "validation_failed",
+                "errors" => $validator->errors()
+            ], 422);
+        }
+
+        $data = $validator->validated();
 
         $student = Student::create($data);
 
