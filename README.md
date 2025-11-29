@@ -7,52 +7,127 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## School Management API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+School Management é uma API que reúne um conjunto de ferramentas voltadas à organização de sistemas de gestão educacional.  
+Seu objetivo é disponibilizar uma API que auxilie no gerenciamento das atividades de todos os níveis de usuários de uma organização educacional (professores, alunos, turmas, relatórios, entre outros).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Sobre o projeto
 
-## Learning Laravel
+- Este projeto foi pensado e desenvolvido para servir como uma ferramenta facilitadora para a comunidade; por isso, está disponível 100% open source.
+- Caso tenha interesse em adicionar alguma funcionalidade que sinta falta ou implementar melhorias, sinta-se à vontade para dar um fork. Estou disponível para conversarmos!
+- Esta API tem como intuito encorajar mais desenvolvedores a construir e criar ferramentas para facilitar o dia a dia. Viva o open source!
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Ferramentas Utilizadas
+- **Backend**: Laravel 12 (PHP Framework)
+- **Linguagem**: PHP 8.2 ou superior
+- **Base de Dados**: SQLite (padrão), configurável para MySQL/PostgreSQL
+- **Testes**: PHPUnit / Pest
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Rotas disponíveis
 
-### Premium Partners
+- **Auth**  
+  ``Route::post('/register', [AuthController::class, 'register']);`` <br>
+  ``Route::get('/login', [AuthController::class, 'login']);``
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **Teacher**  
+  ``Route::get('/teachers', [TeacherController::class, 'index'])->name('index');`` <br>
+  ``Route::post('/teachers', [TeacherController::class, 'store'])->name('store');`` <br>
+  ``Route::patch('/teachers/{teacher}', [TeacherController::class, 'update'])->name('update');`` <br>
+  ``Route::delete('/teachers/{teacher}', [TeacherController::class, 'destroy'])->name('destroy');``
 
-## Contributing
+- **Student**  
+  ``Route::get('/students', [StudentController::class, 'index'])->name('index');`` <br>
+  ``Route::post('/students', [StudentController::class, 'store'])->name('store');`` <br>
+  ``Route::patch('/students/{student}', [StudentController::class, 'update'])->name('update');`` <br>
+  ``Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('destroy');``
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Turmas**  
+  ``Route::get('/turmas', [TurmaController::class, 'index'])->name('index');`` <br>
+  ``Route::post('/turmas', [TurmaController::class, 'store'])->name('store');`` <br>
+  ``Route::patch('/turmas/{turma}', [TurmaController::class, 'update'])->name('update');`` <br>
+  ``Route::delete('/turmas/{turma}', [TurmaController::class, 'destroy'])->name('destroy');`` <br>
+  ``Route::post('/turmas/{turma}/professor', [TurmaController::class, 'addTeacher'])->name('addTeacher');`` <br>
+  ``Route::get('/turmas/{turma}', [TurmaController::class, 'show'])->name('show');``
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Sobre as funcionalidades
 
-## Security Vulnerabilities
+### **Autenticação**
+- O projeto utiliza o sistema de autenticação **Laravel Sanctum**, que possibilita a geração de tokens, permitindo a criação de usuários autorizados para utilizar as funcionalidades.
+- Deve-se primeiramente:
+    - Criar um usuário autenticado no sistema, gerando um Bearer Token;
+    - Enviar esse token no campo *Authorization* da sua aplicação para permitir acesso às funcionalidades da API.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### **Professor**
+- As funcionalidades de professor abrangem um CRUD, com as seguintes operações:
+    - **Cadastrar** professor;
+    - **Editar** um professor específico;
+    - **Buscar** um professor ou todos os cadastrados no sistema;
+    - **Deletar** um professor.
+
+### **Turma**
+- As funcionalidades de turma abrangem um CRUD, com as seguintes operações:
+    - **Cadastrar** uma turma;
+    - **Editar** uma turma específica;
+    - **Buscar** uma turma ou todas as cadastradas no sistema;
+    - **Gerar** um relatório da turma com todos os alunos e professores cadastrados;
+    - **Deletar** uma turma.
+
+### **Aluno**
+- As funcionalidades de aluno abrangem um CRUD, com as seguintes operações:
+    - **Cadastrar** aluno;
+    - **Editar** um aluno específico;
+    - **Buscar** um aluno ou todos os cadastrados no sistema;
+    - **Deletar** um aluno.
+
+---
+
+## Como rodar o projeto
+
+Para rodar o projeto localmente, você precisará ter instalado em sua máquina:
+
+- [PHP 8.2+](https://www.php.net/downloads)
+- [Composer](https://getcomposer.org/)
+- [Git](https://git-scm.com/)
+
+### Passo a passo
+
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/gabrielvsiqueira/school-management-api.git
+   cd school-management-api
+
+
+2. **Instale as dependências do PHP**
+    ```bash
+   composer install
+   
+3. **Gere uma chave da aplicação**
+    ```bash
+   php artisan key:generate
+   
+4. **Rode o projeto localmente e está disponível para testar**
+    ```bash
+   php artisan serve
+    
+5. **Consulte o swagger para verificação dos endpoints**
+- Disponibilizei um swagger para verificação e testes dos endpoints.
+
+---
+   
+## Autor
+- Desenvolvidor por Gabriel Vitor Siqueira.
+- **[Linkedin](https://www.linkedin.com/in/gabriel-vitor-siqueira/)**
+
+---
 
 ## License
 
