@@ -1,0 +1,382 @@
+openapi: 3.0.4
+info:
+  title: School Management API
+  version: 1.0.0
+  description: >-
+    **Português:**
+    Este projeto foi desenvolvido para servir como um facilitador para a gestão de sistemas de educação e afins. O intuito é disponibilizar uma API que auxilie na gestão das atividades de todos os níveis de utilizador de uma organização educacional (professores, alunos, gestão de turmas, relatórios, entre outros).
+
+
+    **English:**
+    This project was developed to serve as a facilitator for managing education systems and related services. Its purpose is to provide an API that assists in managing the activities of all user levels within an educational organization (teachers, students, class management, reporting, among others).
+  contact:
+    name: Gabriel Vitor Siqueira
+    url: https://github.com/gabrielvsiqueira/school-management-api
+
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/globant-97d/scholl-management-api/1.0.0
+  - url: http://localhost:8000
+    description: Servidor de Desenvolvimento Local (nativoLaravel)
+  - url: https://api.school-management.com/v1
+    description: Servidor de Produção (Herd)
+
+tags:
+  - name: Auth Token
+    description: Rotas de autenticação.
+  - name: Students
+    description: Operações relacionadas à gestão de alunos.
+  - name: Teachers
+    description: Operações relacionadas à gestão de professores.
+  - name: Turmas
+    description: Operações relacionadas à gestão de turmas.
+
+paths:
+  ################################
+  # AUTH
+  ################################
+  /api/register:
+    post:
+      tags:
+        - Auth Token
+      summary: Registra um novo usuário da API gerando seu token Bearer.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Alan Turing"
+              email: "turing@teste.com"
+              password: "1234567"
+              password_confirmation: "1234567"
+              department: "Ciência da Computação"
+      responses:
+        '201':
+          description: Usuário criado com sucesso.
+          content:
+            application/json:
+              example:
+                user:
+                  id: 1
+                  name: "Gabriel Siqueira"
+                  email: "gabriel@example.com"
+                token: "2|bdhs8282gsdgsdgs"
+
+  /api/login:
+    get:
+      tags:
+        - Auth Token
+      summary: Realiza login e retorna um Bearer Token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              email: "turing@teste.com"
+              password: "1234567"
+      responses:
+        '200':
+          description: Login realizado com sucesso.
+          content:
+            application/json:
+              example:
+                status: "success"
+                data:
+                  teacher:
+                    id: 1
+                    name: "Alan Turing teste"
+                    email: "turing@teste.com"
+                    department: "Ciência da Computação"
+                    created_at: "2025-11-27T22:44:51.000000Z"
+                    updated_at: "2025-11-28T00:44:40.000000Z"
+                  token: "6|Q2JLW8kae7lz9M8IGHLKPYKYjgAtVUcphwDbEgF3b21920a5"
+        '401':
+          description: Credenciais inválidas.
+          content:
+            application/json:
+              example:
+                message: "Unauthorized"
+
+  ################################
+  # STUDENTS CRUD
+  ################################
+  /api/students:
+    get:
+      tags:
+        - Students
+      summary: Lista todos os alunos cadastrados.
+      responses:
+        '200':
+          description: Lista paginada de alunos.
+          content:
+            application/json:
+              example: { ... }
+    post:
+      tags:
+        - Students
+      summary: Cadastrar um novo aluno no sistema.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Maria Oliveira"
+              date_of_birth: "2007-09-21"
+              turma_id: 5
+      responses:
+        '201':
+          description: Aluno criado.
+    patch:
+      tags:
+        - Students
+      summary: Atualizar um aluno existente.
+      parameters:
+        - in: path
+          name: studentId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "João Silva Atualizado"
+              email: "joao.silva@example.com"
+      responses:
+        '200':
+          description: Aluno atualizado.
+    delete:
+      tags:
+        - Students
+      summary: Remove um aluno.
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+      responses:
+        '204':
+          description: Aluno removido.
+
+  ################################
+  # TEACHERS CRUD
+  ################################
+  /api/teachers:
+    get:
+      tags:
+        - Teachers
+      summary: Lista todos os professores.
+      responses:
+        '200':
+          description: Lista de professores.
+          content:
+            application/json:
+              example: { ... }
+    post:
+      tags:
+        - Teachers
+      summary: Cria um novo professor.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Carlos Lima"
+              email: "carlos@example.com"
+              specialization: "História"
+      responses:
+        '201':
+          description: Professor criado.
+
+  /api/teachers/{teacherId}:
+    get:
+      tags:
+        - Teachers
+      summary: Busca um professor por ID.
+      parameters:
+        - name: teacherId
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Professor encontrado.
+    patch:
+      tags:
+        - Teachers
+      summary: Atualiza um professor.
+      parameters:
+        - name: teacherId
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              specialization: "Geografia"
+      responses:
+        '200':
+          description: Atualizado.
+    delete:
+      tags:
+        - Teachers
+      summary: Remove um professor.
+      parameters:
+        - name: teacherId
+          in: path
+          required: true
+      responses:
+        '204':
+          description: Removido.
+
+  ################################
+  # TURMAS CRUD
+  ################################
+  /api/turmas:
+    get:
+      tags:
+        - Turmas
+      summary: Lista todas as turmas.
+      responses:
+        '200':
+          description: Lista de turmas.
+          content:
+            application/json:
+              example: { ... }
+    post:
+      tags:
+        - Turmas
+      summary: Cria uma nova turma.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Turma B"
+              subject: "Matemática"
+              teacher_id: 2
+      responses:
+        '201':
+          description: Turma criada.
+
+  /api/turmas/{turmaId}:
+    get:
+      tags:
+        - Turmas
+      summary: Detalhes de uma turma.
+      parameters:
+        - name: turmaId
+          in: path
+          required: true
+      responses:
+        '200':
+          description: Detalhes da turma.
+    patch:
+      tags:
+        - Turmas
+      summary: Atualiza informações da turma.
+      parameters:
+        - name: turmaId
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              subject: "Química"
+      responses:
+        '200':
+          description: Turma atualizada.
+    delete:
+      tags:
+        - Turmas
+      summary: Remove uma turma.
+      parameters:
+        - name: turmaId
+          in: path
+          required: true
+      responses:
+        '204':
+          description: Turma removida.
+
+  /api/turmas/{turmaId}/teacher:
+    post:
+      tags:
+        - Turmas
+      summary: Adiciona ou altera o professor responsável pela turma.
+      parameters:
+        - name: turmaId
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              teacher_id: 5
+      responses:
+        '200':
+          description: Professor vinculado à turma.
+
+################################
+# COMPONENTS
+################################
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        name: { type: string, example: "João Silva" }
+        email: { type: string, example: "joao@example.com" }
+        date_of_birth: { type: string, format: date }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+
+    StudentInput:
+      type: object
+      required: [name, email]
+      properties:
+        name: { type: string }
+        email: { type: string }
+        date_of_birth: { type: string, format: date }
+
+    Teacher:
+      type: object
+      properties:
+        id: { type: integer, example: 10 }
+        name: { type: string, example: "Maria Santos" }
+        specialization: { type: string }
+        email: { type: string }
+
+    TeacherInput:
+      type: object
+      required: [name, email]
+      properties:
+        name: { type: string }
+        email: { type: string }
+        specialization: { type: string }
+
+    Turma:
+      type: object
+      properties:
+        id: { type: integer, example: 101 }
+        name: { type: string }
+        subject: { type: string }
+        teacher_id: { type: integer }
+
+    ClassInput:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string }
+        subject: { type: string }
+        teacher_id: { type: integer }
+
+    PaginationMeta:
+      type: object
+      properties:
+        current_page: { type: integer }
+        total: { type: integer }
