@@ -14,9 +14,6 @@ info:
     url: https://github.com/gabrielvsiqueira/school-management-api
 
 servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/globant-97d/scholl-management-api/1.0.0
   - url: http://localhost:8000
     description: Servidor de Desenvolvimento Local (nativoLaravel)
   - url: https://api.school-management.com/v1
