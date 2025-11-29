@@ -118,8 +118,11 @@ Para rodar o projeto localmente, você precisará ter instalado em sua máquina:
     ```bash
    php artisan serve
     
-5. **Consulte o swagger para verificação dos endpoints**
-- Disponibilizei um swagger para verificação e testes dos endpoints.
+5. **Acesse a documentação da API (Swagger)**
+- Este projeto possui documentação completa seguindo o padrão OpenAPI 3.0, publicada via Swagger UI.
+- Disponibilizei para verificação e testes dos endpoints.
+    ```bash
+  https://Gabrielvsiqueira.github.io/school-management-api/
 
 ---
    
