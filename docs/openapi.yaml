@@ -26,7 +26,7 @@ tags:
     description: Operações relacionadas à gestão de alunos.
   - name: Teachers
     description: Operações relacionadas à gestão de professores.
-  - name: Turmas
+  - name: ClassModel
     description: Operações relacionadas à gestão de turmas.
 
 paths:
@@ -226,96 +226,106 @@ paths:
       responses:
         '204':
           description: Removido.
-
-  ################################
-  # TURMAS CRUD
-  ################################
-  /api/turmas:
-    get:
-      tags:
-        - Class_Model
-      summary: Lista todas as turmas.
-      responses:
-        '200':
-          description: Lista de turmas.
-          content:
-            application/json:
-              example: { ... }
-    post:
-      tags:
-        - Class_Model
-      summary: Cria uma nova turma.
-      requestBody:
-        required: true
+################################
+# CLASS MODELS CRUD
+################################
+/api/class-models:
+  get:
+    tags:
+      - ClassModel
+    summary: Lista todas as turmas (class models).
+    responses:
+      '200':
+        description: Lista de turmas.
         content:
           application/json:
-            example:
-              name: "Turma B"
-              subject: "Matemática"
-              teacher_id: 2
-      responses:
-        '201':
-          description: Turma criada.
+            example: { ... }
 
-  /api/turmas/{turmaId}:
-    get:
-      tags:
-        - Class_Model
-      summary: Detalhes de uma turma.
-      parameters:
-        - name: turmaId
-          in: path
-          required: true
-      responses:
-        '200':
-          description: Detalhes da turma.
-    patch:
-      tags:
-        - Class_Model
-      summary: Atualiza informações da turma.
-      parameters:
-        - name: turmaId
-          in: path
-          required: true
-      requestBody:
-        required: true
-        content:
-          application/json:
-            example:
-              subject: "Química"
-      responses:
-        '200':
-          description: Turma atualizada.
-    delete:
-      tags:
-        - Class_Model
-      summary: Remove uma turma.
-      parameters:
-        - name: turmaId
-          in: path
-          required: true
-      responses:
-        '204':
-          description: Turma removida.
+  post:
+    tags:
+      - ClassModel
+    summary: Cria uma nova turma.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          example:
+            name: "Turma B"
+            subject: "Matemática"
+            teacher_id: 2
+    responses:
+      '201':
+        description: Turma criada com sucesso.
 
-  /api/turmas/{turmaId}/teacher:
-    post:
-      tags:
-        - Class_Model
-      summary: Adiciona ou altera o professor responsável pela turma.
-      parameters:
-        - name: turmaId
-          in: path
-          required: true
-      requestBody:
+/api/class-models/{classModelId}:
+  get:
+    tags:
+      - ClassModel
+    summary: Detalhes de uma turma específica.
+    parameters:
+      - name: classModelId
+        in: path
         required: true
-        content:
-          application/json:
-            example:
-              teacher_id: 5
-      responses:
-        '200':
-          description: Professor vinculado à turma.
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Detalhes da turma.
+
+  patch:
+    tags:
+      - ClassModel
+    summary: Atualiza informações da turma.
+    parameters:
+      - name: classModelId
+        in: path
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          example:
+            subject: "Química"
+    responses:
+      '200':
+        description: Turma atualizada com sucesso.
+
+  delete:
+    tags:
+      - ClassModel
+    summary: Remove uma turma.
+    parameters:
+      - name: classModelId
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      '204':
+        description: Turma removida.
+
+/api/class-models/{classModelId}/teacher:
+  post:
+    tags:
+      - ClassModel
+    summary: Adiciona ou altera o professor responsável pela turma.
+    parameters:
+      - name: classModelId
+        in: path
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          example:
+            teacher_id: 5
+    responses:
+      '200':
+        description: Professor vinculado à turma.
 
 ################################
 # COMPONENTS
