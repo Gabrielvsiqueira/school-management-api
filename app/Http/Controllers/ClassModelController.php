@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Turma;
+use App\Models\ClassModel;
 use Illuminate\Http\Request;
 
-class TurmaController extends Controller
+class ClassModelController extends Controller
 {
     public function index()
     {
         return response()->json([
             "status" => "success",
-            "data" => Turma::all()
+            "data" => ClassModel::all()
         ]);
     }
 
@@ -22,33 +22,33 @@ class TurmaController extends Controller
             "year" => "required|integer|min:1900|max:2090",
         ]);
 
-        $turma = Turma::create($data);
+        $classModel = ClassModel::create($data);
 
         return response()->json([
             "status" => "success",
             "message" => "Turma cadastrado com sucesso!",
-            "data" => $turma
+            "data" => $classModel
         ], 201);
     }
 
-    public function update(Request $request, Turma $turma)
+    public function update(Request $request, ClassModel $classModel)
     {
         $data = $request->validate([
             "name" => "sometimes",
             "year" => "sometimes",
         ]);
 
-        $turma->update($data);
+        $classModel->update($data);
 
         return response()->json([
             "status" => "success",
             "message" => "Turma atualizado com sucesso!",
-            "data" => $turma
+            "data" => $classModel
         ], 201);
     }
 
-    public function destroy(Turma $turma) {
-        $turma->delete();
+    public function destroy(ClassModel $classModel) {
+        $classModel->delete();
 
         return response()->json([
             "status" => "success",
@@ -56,7 +56,7 @@ class TurmaController extends Controller
         ]);
     }
 
-    public function addTeacher(Request $request, Turma $turma)
+    public function addTeacher(Request $request, ClassModel $classModel)
     {
         $data = $request->validate([
             'teacher_id' => 'required|integer|exists:teachers,id',
@@ -64,30 +64,30 @@ class TurmaController extends Controller
 
         $teacherId = $data['teacher_id'];
 
-        if ($turma->teachers()->where('teacher_id', $teacherId)->exists()) {
+        if ($classModel->teachers()->where('teacher_id', $teacherId)->exists()) {
             return response()->json([
                 "status" => "error",
                 "message" => "O professor já está associado a esta turma."
             ], 409);
         }
 
-        $turma->teachers()->attach($teacherId);
+        $classModel->teachers()->attach($teacherId);
 
         return response()->json([
             "status" => "success",
             "message" => "Professor adicionado à turma com sucesso!",
-            "turma_id" => $turma->id,
+            "turma_id" => $classModel->id,
             "teacher_id" => $teacherId
         ], 201);
     }
 
-    public function show(Turma $turma)
+    public function show(ClassModel $classModel)
     {
-        $turmaComDetalhes = $turma->load(['students', 'teachers']);
+        $classModelComDetalhes = $classModel->load(['students', 'teachers']);
 
         return response()->json([
             "status" => "success",
-            "data" => $turmaComDetalhes
+            "data" => $classModelComDetalhes
         ]);
     }
 }

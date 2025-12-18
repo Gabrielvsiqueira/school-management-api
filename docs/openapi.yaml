@@ -233,7 +233,7 @@ paths:
   /api/turmas:
     get:
       tags:
-        - Turmas
+        - Class_Model
       summary: Lista todas as turmas.
       responses:
         '200':
@@ -243,7 +243,7 @@ paths:
               example: { ... }
     post:
       tags:
-        - Turmas
+        - Class_Model
       summary: Cria uma nova turma.
       requestBody:
         required: true
@@ -260,7 +260,7 @@ paths:
   /api/turmas/{turmaId}:
     get:
       tags:
-        - Turmas
+        - Class_Model
       summary: Detalhes de uma turma.
       parameters:
         - name: turmaId
@@ -271,7 +271,7 @@ paths:
           description: Detalhes da turma.
     patch:
       tags:
-        - Turmas
+        - Class_Model
       summary: Atualiza informações da turma.
       parameters:
         - name: turmaId
@@ -288,7 +288,7 @@ paths:
           description: Turma atualizada.
     delete:
       tags:
-        - Turmas
+        - Class_Model
       summary: Remove uma turma.
       parameters:
         - name: turmaId
@@ -301,7 +301,7 @@ paths:
   /api/turmas/{turmaId}/teacher:
     post:
       tags:
-        - Turmas
+        - Class_Model
       summary: Adiciona ou altera o professor responsável pela turma.
       parameters:
         - name: turmaId
@@ -356,7 +356,7 @@ components:
         email: { type: string }
         specialization: { type: string }
 
-    Turma:
+    Class_Model:
       type: object
       properties:
         id: { type: integer, example: 101 }

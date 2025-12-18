@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\TurmaController;
+use App\Http\Controllers\ClassModelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +22,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/students/{student}', [StudentController::class, 'update'])->name('update');
     Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('destroy');
 
-    Route::get('/turmas', [TurmaController::class, 'index'])->name('index');
-    Route::post('/turmas', [TurmaController::class, 'store'])->name('store');
-    Route::patch('/turmas/{turma}', [TurmaController::class, 'update'])->name('update');
-    Route::delete('/turmas/{turma}', [TurmaController::class, 'destroy'])->name('destroy');
-    Route::post('/turmas/{turma}/professor', [TurmaController::class, 'addTeacher'])->name('addTeacher');
-    Route::get('/turmas/{turma}', [TurmaController::class, 'show'])->name('show');
+    Route::get('/class-models', [ClassModelController::class, 'index']);
+    Route::post('/class-models', [ClassModelController::class, 'store']);
+    Route::patch('/class-models/{classModel}', [ClassModelController::class, 'update']);
+    Route::delete('/class-models/{classModel}', [ClassModelController::class, 'destroy']);
+    Route::post('/class-models/{classModel}/teacher', [ClassModelController::class, 'addTeacher']);
+    Route::get('/class-models/{classModel}', [ClassModelController::class, 'show']);
 });

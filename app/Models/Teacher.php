@@ -23,6 +23,6 @@
         ];
 
         public function turmas(){
-            return $this->belongsToMany(Turma::class);
+            return $this->belongsToMany(ClassModel::class);
         }
     }

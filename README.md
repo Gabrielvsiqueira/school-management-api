@@ -10,7 +10,7 @@
 ## School Management API
 
 School Management é uma API que reúne um conjunto de ferramentas voltadas à organização de sistemas de gestão educacional.  
-Seu objetivo é disponibilizar uma API que auxilie no gerenciamento das atividades de todos os níveis de usuários de uma organização educacional (professores, alunos, turmas, relatórios, entre outros).
+Seu objetivo é disponibilizar uma API que auxilie no gerenciamento das atividades de todos os níveis de usuários de uma organização educacional (professores, alunos, class-models, relatórios, entre outros).
 
 ---
 
@@ -48,13 +48,13 @@ Seu objetivo é disponibilizar uma API que auxilie no gerenciamento das atividad
   ``Route::patch('/students/{student}', [StudentController::class, 'update'])->name('update');`` <br>
   ``Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('destroy');``
 
-- **Turmas**  
-  ``Route::get('/turmas', [TurmaController::class, 'index'])->name('index');`` <br>
-  ``Route::post('/turmas', [TurmaController::class, 'store'])->name('store');`` <br>
-  ``Route::patch('/turmas/{turma}', [TurmaController::class, 'update'])->name('update');`` <br>
-  ``Route::delete('/turmas/{turma}', [TurmaController::class, 'destroy'])->name('destroy');`` <br>
-  ``Route::post('/turmas/{turma}/professor', [TurmaController::class, 'addTeacher'])->name('addTeacher');`` <br>
-  ``Route::get('/turmas/{turma}', [TurmaController::class, 'show'])->name('show');``
+- **ClassModel**  
+  ``Route::get('/class-models', [ClassModelController::class, 'index'])->name('index');`` <br>
+  ``Route::post('/class-models', [ClassModelController::class, 'store'])->name('store');`` <br>
+  ``Route::patch('/class-models/{turma}', [ClassModelController::class, 'update'])->name('update');`` <br>
+  ``Route::delete('/class-models/{turma}', [ClassModelController::class, 'destroy'])->name('destroy');`` <br>
+  ``Route::post('/class-models/{turma}/professor', [ClassModelController::class, 'addTeacher'])->name('addTeacher');`` <br>
+  ``Route::get('/class-models/{turma}', [ClassModelController::class, 'show'])->name('show');``
 
 ---
 

@@ -17,6 +17,6 @@ class Student extends Model
     ];
 
     public function turma(){
-        return $this->belongsTo(Turma::class);
+        return $this->belongsTo(ClassModel::class);
     }
 }
