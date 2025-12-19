@@ -127,7 +127,7 @@ Para rodar o projeto localmente, você precisará ter instalado em sua máquina:
 ---
    
 ## Autor
-- Desenvolvidor por Gabriel Vitor Siqueira.
+- Gabriel Vitor Siqueira.
 - **[Linkedin](https://www.linkedin.com/in/gabriel-vitor-siqueira/)**
 
 ---
